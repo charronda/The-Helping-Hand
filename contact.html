@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-euiv="X-UA-Compatible" content="ie=edge">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!--local styles -->
+	<link rel="stylesheet" href="assets/css/style.css">
+<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
+
+	<title>Helping Hand - Contact</title>
+</head>
+
+<body>
+<!-- Navigation bar -->
+	<nav class="navbar navbar-default border-top">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#"><img class="logo" src="assets/images/logo.png"></a>
+	    </div>
+	    <ul class="nav navbar-nav justify-content-center">
+	      <li><a href="index.html">Home</a></li>
+	      <li><a href="events.html">Events</a></li>
+	      <li><a href="charities.html">Charities</a></li>
+	      <li class="active"><a href="contact.html">Contact</a></li>
+	    </ul>
+			</div>
+		</div>
+	 </div>
+	</nav>
+
+  <div class="container">
+
+    <p class="intro">Please feel free to contact the staff at The Helping Hand with any questions or concerns you may have, or if you need further assistance deciding how to help the homeless in your community. We are always here to help!</p>
+    <div class="wrapper">
+      <div class="company-info">
+
+        <ul>
+          <li><i class="fa fa-phone"></i> (555) 555-5555</li>
+          <li><i class="fa fa-envelope"></i> contactus@thehelpinghand.com</li>
+        </ul>
+      </div>
+      <div class="contact">
+        <h3>Email Us</h3>
+
+<!-- @TODO - validation -->
+        <form id="contactForm">
+          <p>
+            <label>Name</label>
+            <input type="text" name="name">
+          </p>
+          <p>
+            <label>Company</label>
+            <input type="text" name="company" id="company">
+          </p>
+          <p>
+            <label>Email Address</label>
+            <input type="text" name="email" id="email">
+          </p>
+          <p>
+            <label>Phone Number</label>
+            <input type="text" name="phone" id= "phone">
+          </p>
+          <p class="full">
+            <label>Message</label>
+            <textarea name="message" rows="5" id="message"></textarea>
+          </p>
+          <p class="full">
+            <button type="submit">Submit</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <!-- Footer -->
+  <footer id="main-footer" class="grid">
+    <div>&copy; 2018 The Helping Hand</div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+
+  <script>
+    // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAIPipmQrzv-Jq-U-Uqt-3q4ghvugnGWDo",
+    authDomain: "contact-47a69.firebaseapp.com",
+    databaseURL: "https://contact-47a69.firebaseio.com",
+    projectId: "contact-47a69",
+    storageBucket: "contact-47a69.appspot.com",
+    messagingSenderId: "242452932850"
+  };
+  firebase.initializeApp(config);
+// Refernce messages collection
+var messagesRef = firebase.database().ref('messages');
+// Listen for form submit
+document.getElementById('contactForm').addEventListener('submit', submitForm);
+// Submit form
+function submitForm(e){
+  e.preventDefault();
+  console.log(123);
+  // Get values
+  var name = getInputVal('name');
+  var company = getInputVal('company');
+  var email = getInputVal('email');
+  var phone = getInputVal('Phone');
+  var message = getInputVal('message');
+  // Save message
+  saveMessage(name, company, email, phone, message);
+}
+// Function to get form values
+function getInputVal(id){
+  return document.getElementById(id).value;
+}
+// Save message to firebase
+function saveMessage(name, company, email, phone, message){
+  var newMessageRef = messagesRef.push();
+  newMessageRef.set({
+    name: name,
+    company:company,
+    email:email,
+    phone:phone,
+    message:message
+  });
+}
+</script>
+</body>
+</html>

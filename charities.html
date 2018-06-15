@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-euiv="X-UA-Compatible" content="ie=edge">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!--local styles -->
+	<link rel="stylesheet" href="assets/css/style.css">
+<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
 
+	<title>Helping Hand - Charities</title>
+</head>
+
+<body>
+<!-- Navigation bar -->
+	<nav class="navbar navbar-default border-top">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="index.html"><img class="logo" src="assets/images/logo.png"></a>
+	    </div>
+  	    <ul class="nav navbar-nav justify-content-center">
+  	      <li><a href="index.html">Home</a></li>
+  	      <li><a href="events.html">Events</a></li>
+  	      <li class="active"><a href="charities.html">Charities</a></li>
+  	      <li><a href="contact.html">Contact</a></li>
+  	    </ul>
+		  </div>
+	  </div>
+   </div>
+</nav>
+
+
+  <!-- Charity Search HTML Start Here -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong><i class="fa  fa-list-alt"></i>Search for charities to help the homeless in your area.</strong></h3>
+          </div>
+          <form>
+            <div class="form-group">
+              <label for="zip-input">Enter Zip Code</label>
+              <input type="text" id="zip-input">
+            </div>
+          </form>
+          <button type="button" class="btn btn-primary">search</button>
+        </div>
+      </div>
+    </div>
+    <h1 id="event-view"></h1>
+  <!-- This row will handle all of the retrieved articles -->
+  <!-- This panel will initially be made up of a panel and wells for each of the articles retrieved -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-primary">
+
+        <!-- Panel Heading for the retrieved articles box -->
+        <div class="panel-heading">
+          <h3 class="panel-title"><strong><i class="fa fa-table"></i>List of Charities</strong></h3>
+        </div>
+      </div>
+    </div>
+        <!-- This main panel will hold each of the resulting articles -->
+        <div class="panel-body" id="charity-list">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Footer -->
+    <footer id="main-footer" class="grid">
+        <div>&copy; 2018 The Helping Hand</div>
+    </footer>
+
+       <script>
+         $(document).ready(function () {
+    jQuery.ajaxPrefilter(function (options) {
+        if (options.crossDomain && jQuery.support.cors) {
+            options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+        }
+    });
+    $("button").on("click", function () {
+        var queryURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Non+Profit+Organizations+in+Atlanta&key=AIzaSyBSqDhecheOfEpSgMBNwOEv_PeU_o8xmw8";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).done(function (response) {
+            for (i = 0; i < response.results.length; i++) {
+                console.log(response);
+                var results = response.results;
+                var eventDiv = $("#charity-list");
+                var city = response.results[i].formatted_address;
+                var eventDesc = response.results[i].rating;
+                var eventName = response.results[i].name;
+                console.log(eventName);
+                console.log(city);
+                console.log(eventDesc);
+                $(eventDiv).append(eventDesc + " " + eventName + " " + city + "<br><br>");
+            }
+        })
+    });
+});
+       </script>
+
+  </body>
+  </html>
